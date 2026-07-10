@@ -103,16 +103,25 @@
 }
 
 // ---- La mujer que da la bienvenida -----------------------------------------
-// `login.png` es RGBA (80% transparente) sobre un lienzo panorámico de
-// 2400×1340 cuyo 58% derecho está vacío. La figura ocupa x 7–42% y llega de
-// borde a borde en vertical. La caja replica esa proporción (840×1340 ≈ 63/100)
-// y se centra en el 24,6%: se ve la ilustración entera, sin cortarle nada y sin
-// arrastrar el lienzo vacío. Con alfa real no hace falta `mix-blend-mode`.
+// `login.png` es RGBA sobre un lienzo panorámico de 2400×1340 cuyo 58% derecho
+// está vacío. Medido sobre el canal alfa, la figura ocupa x 163..1015 px
+// (6,8–42,3%) e y 97..1339 px: arranca 97 px por debajo del borde superior y
+// se sale del lienzo por abajo (la última fila aún trae vestido).
+//
+// Con `cover` la altura es la dimensión que llena la caja, así que la vertical
+// se ve entera y sólo hay que encuadrar la horizontal. La ventana visible mide
+// 872 px de los 2400 (872/1340 → 218/335) y `object-position: 10%` la sitúa en
+// x 152,8..1024,8: la figura entra completa con ~10 px de aire a cada lado.
+//
+// Cuidado: `object-position` interpola entre bordes, no centra el punto que le
+// pasas. Su valor NO es el centro de la figura (24,6%) sino
+// margenIzquierdo / (anchoImagen − anchoVentana) = 153 / 1528 ≈ 10%.
+// Con alfa real no hace falta `mix-blend-mode`.
 .hero__figure {
   order: 1;
   justify-self: center;
   width: min(100%, 22rem);
-  aspect-ratio: 63 / 100;
+  aspect-ratio: 218 / 335;
   overflow: hidden;
 
   @include m.respond-to('lg') {
@@ -124,7 +133,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 24.6% 50%;
+    object-position: 10% 50%;
+
+    // El vestido está truncado en el propio PNG. Un desvanecido corto en el
+    // borde inferior convierte ese corte en una disolución sobre el papel.
+    mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
   }
 }
 

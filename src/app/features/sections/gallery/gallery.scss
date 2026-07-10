@@ -91,8 +91,6 @@
 // el modal no salta de tamaño al pasar de una a otra. `contain` las apaisa
 // dentro de la caja y el sobrante queda como marco.
 .lightbox__stage {
-  display: grid;
-  place-items: center;
   width: 100%;
   aspect-ratio: 16 / 10;
   max-height: 64svh;
@@ -100,7 +98,10 @@
   overflow: hidden;
   background: var(--surface-warm);
 
+  // `display: block` a propósito: con `place-items: center` el <img> se mide por
+  // su propia relación de aspecto (una 1:1 salía cuadrada de 872px) y desbordaba.
   img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;

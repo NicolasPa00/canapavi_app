@@ -1,0 +1,69 @@
+<footer class="footer">
+  <span class="footer__toile" aria-hidden="true"></span>
+
+  <div class="footer__inner container">
+    <!-- El canto: lo primero que se lee en el pie -->
+    <p class="footer__canto">
+      <span aria-hidden="true">&#9834;</span>
+      Mientras haya quien cante, el territorio sigue vivo.
+    </p>
+
+    <div class="footer__grid">
+      <!-- Marca -->
+      <div class="footer__brand">
+        <a class="footer__logo" href="#inicio" aria-label="CANAPAVI · inicio">
+          <span class="footer__mark" aria-hidden="true">
+            <svg viewBox="0 0 40 32" width="34" height="27" focusable="false">
+              <rect x="2" y="14" width="5" height="16" rx="2.5" />
+              <rect x="11" y="9" width="5" height="21" rx="2.5" />
+              <rect x="20" y="4" width="5" height="26" rx="2.5" />
+              <rect x="29" y="11" width="5" height="19" rx="2.5" />
+            </svg>
+          </span>
+          <span class="footer__name">{{ foundation.shortName }}</span>
+        </a>
+        <p class="footer__desc">{{ foundation.fullName }}.</p>
+
+        <ul class="footer__social" role="list">
+          @for (s of socials; track s.label) {
+            <li>
+              <a [href]="s.url" [attr.aria-label]="s.label" rel="noopener">{{ s.label }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <nav class="footer__col" aria-label="Navegación del pie">
+        <h3 class="footer__heading">Recorre</h3>
+        <ul role="list">
+          @for (link of navLinks; track link.href) {
+            <li><a [href]="link.href">{{ link.label }}</a></li>
+          }
+        </ul>
+      </nav>
+
+      <div class="footer__col">
+        <h3 class="footer__heading">Ríos y pueblos</h3>
+        <ul class="footer__munis" role="list">
+          @for (m of municipalities; track m) {
+            <li>{{ m }}</li>
+          }
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__heading">Escríbenos</h3>
+        <ul class="footer__contact" role="list">
+          <li><a [href]="'mailto:' + foundation.email">{{ foundation.email }}</a></li>
+          <li>{{ foundation.phone }}</li>
+          <li>{{ foundation.location }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© {{ year }} {{ foundation.shortName }}. Todos los derechos reservados.</p>
+      <p class="footer__made">Marimba, manglar y memoria · Pacífico colombiano</p>
+    </div>
+  </div>
+</footer>

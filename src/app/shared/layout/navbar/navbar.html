@@ -1,0 +1,118 @@
+<header class="nav" [class.nav--scrolled]="scrolled()" [class.nav--open]="mobileOpen()">
+  <div class="nav__inner container">
+    <!-- Marca -->
+    <a
+      class="brand"
+      routerLink="/"
+      (click)="closeMobile()"
+      aria-label="CANAPAVI · ir al inicio"
+    >
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 40 32" width="34" height="27" role="img">
+          <rect x="2" y="14" width="5" height="16" rx="2.5" />
+          <rect x="11" y="9" width="5" height="21" rx="2.5" />
+          <rect x="20" y="4" width="5" height="26" rx="2.5" />
+          <rect x="29" y="11" width="5" height="19" rx="2.5" />
+        </svg>
+      </span>
+      <span class="brand__text">
+        <span class="brand__name">CANAPAVI</span>
+        <span class="brand__sub">Fundación cultural</span>
+      </span>
+    </a>
+
+    <!-- Enlaces (escritorio) -->
+    <nav class="nav__links" aria-label="Navegación principal">
+      <ul role="list">
+        @for (link of links(); track link.href) {
+          <li>
+            @if (isRoute(link.href)) {
+              <a [routerLink]="link.href" class="is-route" (click)="closeMobile()">
+                {{ link.label }}
+              </a>
+            } @else {
+              <a
+                [href]="link.href"
+                [class.is-active]="activeHref() === link.href"
+                [attr.aria-current]="activeHref() === link.href ? 'true' : null"
+                (click)="closeMobile()"
+              >
+                {{ link.label }}
+              </a>
+            }
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <div class="nav__actions">
+      <span class="nav__cta">
+        @if (auth.isLoggedIn()) {
+          <span class="nav__user">
+            <span class="nav__avatar" aria-hidden="true">{{ initial() }}</span>
+            <span class="nav__user-info">
+              <span class="nav__user-name">{{ auth.username() }}</span>
+              <span class="nav__user-role">{{ roleLabel(auth.role()!) }}</span>
+            </span>
+          </span>
+          <app-button variant="secondary" size="md" (click)="logout()">Salir</app-button>
+        } @else {
+          <!-- `secondary`, no `gold`: el único botón naranja de la página es el CTA. -->
+          <app-button variant="secondary" size="md" (click)="onLogin()">Ingresar</app-button>
+        }
+      </span>
+
+      <button
+        type="button"
+        class="nav__burger"
+        [class.is-open]="mobileOpen()"
+        [attr.aria-expanded]="mobileOpen()"
+        aria-controls="nav-mobile"
+        aria-label="Abrir menú"
+        (click)="toggleMobile()"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Panel móvil -->
+  <div class="nav__mobile" id="nav-mobile" [hidden]="!mobileOpen()">
+    <nav aria-label="Navegación móvil">
+      <ul role="list">
+        @for (link of links(); track link.href) {
+          <li>
+            @if (isRoute(link.href)) {
+              <a [routerLink]="link.href" (click)="closeMobile()">{{ link.label }}</a>
+            } @else {
+              <a
+                [href]="link.href"
+                [class.is-active]="activeHref() === link.href"
+                (click)="closeMobile()"
+              >
+                {{ link.label }}
+              </a>
+            }
+          </li>
+        }
+      </ul>
+    </nav>
+
+    @if (auth.isLoggedIn()) {
+      <div class="nav__user nav__user--mobile">
+        <span class="nav__avatar" aria-hidden="true">{{ initial() }}</span>
+        <span class="nav__user-info">
+          <span class="nav__user-name">{{ auth.username() }}</span>
+          <span class="nav__user-role">{{ roleLabel(auth.role()!) }}</span>
+        </span>
+      </div>
+      <app-button variant="secondary" size="lg" [full]="true" (click)="logout()">
+        Cerrar sesión
+      </app-button>
+    } @else {
+      <app-button variant="secondary" size="lg" [full]="true" (click)="onLogin()">
+        Ingresar
+      </app-button>
+    }
+  </div>
+</header>

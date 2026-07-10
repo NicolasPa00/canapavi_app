@@ -1,0 +1,75 @@
+@use 'mixins' as m;
+
+.roles {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.role {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  text-align: left;
+  background: var(--surface-warm);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    border-color 0.25s var(--ease-out),
+    background 0.25s var(--ease-out),
+    transform 0.25s var(--ease-out);
+  @include m.focus-ring;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: var(--c-sand);
+  }
+
+  &.is-selected {
+    border-color: var(--c-gold);
+    background: color-mix(in srgb, var(--c-gold) 12%, var(--surface-raised));
+  }
+}
+
+.role__check {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--c-line);
+  transition: border-color 0.25s var(--ease-out), background 0.25s var(--ease-out);
+  position: relative;
+
+  .role.is-selected & {
+    border-color: var(--c-gold);
+    background: var(--c-gold);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: var(--radius-pill);
+      background: var(--c-ink);
+    }
+  }
+}
+
+.role__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.role__label {
+  font-weight: 600;
+  color: var(--text-strong);
+}
+.role__desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}

@@ -1,0 +1,166 @@
+@use 'mixins' as m;
+
+.contact {
+  background: var(--surface-page);
+}
+
+.contact__grid {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: 1fr;
+
+  @include m.respond-to('lg') {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+}
+
+// ---- Información ----
+.contact__details {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  a:hover {
+    color: var(--c-wood);
+  }
+}
+
+.contact__label {
+  @include m.eyebrow;
+  color: var(--c-wood);
+}
+
+// Mapa ilustrativo: mar turquesa, selva, río de ámbar y pueblos.
+.map__sea {
+  fill: var(--c-river-ink);
+}
+.map__land {
+  fill: var(--c-jungle);
+}
+.map__river {
+  fill: none;
+  stroke: var(--c-amber);
+  stroke-width: 2;
+  stroke-dasharray: 4 6;
+}
+.map__town {
+  fill: var(--c-amber-soft);
+}
+.map__halo {
+  fill: none;
+  stroke: var(--c-amber-soft);
+  stroke-opacity: 0.4;
+}
+.map__label {
+  fill: var(--c-paper);
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.contact__map {
+  margin: 0 0 1.75rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.contact__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  a {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--c-jungle);
+    background: var(--surface-raised);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-pill);
+    transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out);
+    @include m.focus-ring;
+
+    &:hover {
+      background: var(--c-jungle);
+      color: var(--c-bone);
+    }
+  }
+}
+
+// ---- Formulario ----
+.contact__form {
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  background: var(--surface-raised);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.contact__success {
+  padding: 0.9rem 1.1rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--c-active);
+  background: color-mix(in srgb, var(--c-active) 12%, transparent);
+  border-radius: var(--radius-md);
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.field__input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: var(--surface-warm);
+  border: 1.5px solid var(--c-line);
+  border-radius: var(--radius-md);
+  color: var(--text-strong);
+  transition: border-color 0.25s var(--ease-out), background 0.25s var(--ease-out);
+
+  &::placeholder {
+    color: var(--text-faint);
+  }
+  &:focus-visible {
+    outline: none;
+    border-color: var(--c-gold);
+    background: var(--surface-raised);
+  }
+  &[aria-invalid='true'] {
+    border-color: var(--c-closed);
+  }
+}
+
+.field__textarea {
+  resize: vertical;
+  min-height: 7rem;
+  font-family: inherit;
+}
+
+.field__error {
+  font-size: 0.82rem;
+  color: var(--c-closed);
+}

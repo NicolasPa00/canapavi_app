@@ -1,0 +1,114 @@
+@use 'mixins' as m;
+
+:host {
+  display: inline-flex;
+}
+
+:host(.is-full) {
+  width: 100%;
+}
+:host(.is-full) .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  transition:
+    transform 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out),
+    background 0.35s var(--ease-out),
+    color 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out);
+  @include m.focus-ring;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn__arrow {
+  transition: transform 0.35s var(--ease-out);
+}
+.btn:hover .btn__arrow {
+  transform: translateX(4px);
+}
+
+// ---- Tamaños ----
+.btn--md {
+  padding: 0.75rem 1.4rem;
+  font-size: 0.95rem;
+}
+.btn--lg {
+  padding: 1rem 1.9rem;
+  font-size: 1.05rem;
+}
+
+// ---- Variantes ----
+.btn--primary {
+  background: var(--c-jungle);
+  color: var(--c-bone);
+  box-shadow: var(--shadow-sm);
+
+  &:hover {
+    background: var(--c-mangrove);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.btn--gold {
+  background: var(--grad-gold);
+  color: var(--c-ink);
+  box-shadow: var(--shadow-gold);
+
+  &:hover {
+    box-shadow: 0 16px 38px rgba(201, 162, 75, 0.4);
+  }
+}
+
+.btn--secondary {
+  background: var(--surface-raised);
+  color: var(--c-jungle);
+  border-color: var(--c-line);
+
+  &:hover {
+    border-color: var(--c-mangrove);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--c-jungle);
+  border-color: currentColor;
+
+  &:hover {
+    background: color-mix(in srgb, var(--c-jungle) 8%, transparent);
+  }
+}
+
+// Para usar sobre fondos oscuros (hero, footer).
+.btn--on-dark {
+  background: color-mix(in srgb, var(--c-bone) 12%, transparent);
+  color: var(--c-bone);
+  border-color: var(--c-line-light);
+  backdrop-filter: blur(6px);
+
+  &:hover {
+    background: var(--c-bone);
+    color: var(--c-jungle);
+  }
+}

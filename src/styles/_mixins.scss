@@ -1,0 +1,100 @@
+// ============================================================================
+//  CANAPAVI · Mixins reutilizables
+//  Uso en componentes:  @use 'mixins' as m;  (includePaths: src/styles)
+// ============================================================================
+@use 'tokens' as t;
+@use 'sass:map';
+
+// ---- Media queries (mobile-first) ------------------------------------------
+@mixin respond-to($breakpoint) {
+  $value: map.get(t.$breakpoints, $breakpoint);
+  @if $value {
+    @media (min-width: $value) {
+      @content;
+    }
+  } @else {
+    @error "Breakpoint desconocido: #{$breakpoint}.";
+  }
+}
+
+// ---- Contenedor centrado ---------------------------------------------------
+@mixin container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+// ---- Glassmorphism ligero --------------------------------------------------
+@mixin glass($tint: rgba(255, 255, 255, 0.7), $blur: 14px) {
+  background: $tint;
+  backdrop-filter: blur($blur) saturate(140%);
+  -webkit-backdrop-filter: blur($blur) saturate(140%);
+  border: 1px solid var(--c-line-light);
+}
+
+// ---- Anillo de foco accesible (WCAG) ---------------------------------------
+@mixin focus-ring($color: var(--c-focus)) {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+
+  &:focus-visible {
+    outline: 3px solid $color;
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+// ---- Tarjeta base flotante -------------------------------------------------
+@mixin card-surface {
+  background: var(--surface-raised);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+// ---- Recorte de texto a N líneas -------------------------------------------
+@mixin line-clamp($lines: 3) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ---- Eyebrow (antetítulo de sección) ---------------------------------------
+@mixin eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-wood);
+}
+
+// ---- Toile del Pacífico ----------------------------------------------------
+// Reproduce en SVG el motivo de `public/fondo.jpeg` (marimba, ola, rombo de
+// tejido, nota) para usarlo como textura de fondo sin cargar los 3,2 MB del
+// JPEG original. Se aplica sobre un pseudo-elemento decorativo.
+//
+//   .seccion { position: relative; &::before { @include toile; } }
+//
+// El SVG va como **máscara**, no como imagen de fondo: así el color lo pone
+// `--toile-ink` y las bandas oscuras (.band--dark) pueden invertirlo. Una data
+// URI no puede leer var(), por eso el trazo del SVG es negro y solo aporta alfa.
+@mixin toile($size: 180px) {
+  $svg: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 44 L54 36 L58 52 L22 60 Z'/%3E%3Cpath d='M25 45v12M32 43v12M39 42v12M46 41v12M53 39v12'/%3E%3Cpath d='M22 60v9M56 52v9'/%3E%3Cpath d='M92 40c8-12 20-12 28 0s20 12 28 0'/%3E%3Cpath d='M92 51c8-12 20-12 28 0s20 12 28 0'/%3E%3Cpath d='M40 108l14-14 14 14-14 14Z'/%3E%3Cpath d='M48 108l6-6 6 6-6 6Z'/%3E%3Ccircle cx='112' cy='122' r='5'/%3E%3Cpath d='M117 122v-22l11 4'/%3E%3Ccircle cx='149' cy='97' r='1.6' fill='%23000' stroke='none'/%3E%3Ccircle cx='16' cy='139' r='1.6' fill='%23000' stroke='none'/%3E%3C/svg%3E";
+
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--toile-opacity);
+  background-color: var(--toile-ink);
+  mask-image: url("#{$svg}");
+  mask-size: $size $size;
+  mask-repeat: repeat;
+  -webkit-mask-image: url("#{$svg}");
+  -webkit-mask-size: $size $size;
+  -webkit-mask-repeat: repeat;
+}

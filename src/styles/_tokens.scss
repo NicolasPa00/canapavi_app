@@ -1,0 +1,199 @@
+// ============================================================================
+//  CANAPAVI · Design Tokens
+//  Identidad extraída de las ilustraciones de /public: acuarela sobre papel,
+//  contorno de tinta, piel y sol en ocre/naranja, vestidos y río en índigo y
+//  violeta, mar en turquesa, marimba y cununo en terracota, hibisco en coral.
+//
+//  Los nombres históricos (--c-jungle, --c-gold, …) se conservan a propósito:
+//  las 13 secciones ya construidas los consumen, y re-mapearlos aquí traslada
+//  la identidad nueva a todo el sitio sin tocar cada componente.
+// ============================================================================
+
+// ---- Paleta base (selva, río y marimba) ------------------------------------
+// Naturaleza y cultura afropacífica: la hoja y el manglar, el río que enlaza
+// los pueblos, la madera de la marimba, el parche ámbar del cununo, el hibisco.
+$color-forest:      #12352c; // Selva profunda — bandas oscuras
+$color-jungle:      #1e5f4b; // Verde selva — primario profundo
+$color-leaf:        #3e8e62; // Hoja / manglar — relleno vegetal
+$color-leaf-ink:    #337650; // Hoja legible como texto (AA sobre papel)
+$color-river:       #1b7f8c; // Río — relleno
+$color-river-ink:   #17707c; // Río legible como texto (AA sobre papel)
+$color-turquoise:   #27a0a8; // Agua clara
+$color-turquoise-lt:#35b2b9; // Agua clara sobre fondo oscuro (AA)
+$color-wood:        #a94a2b; // Madera de marimba y cununo — antetítulos (AA sobre crema)
+$color-amber:       #e2952b; // Parche del cununo / sol — CTA (AA con tinta)
+$color-amber-soft:  #f0b04a; // Ámbar claro — cifras sobre oscuro, degradados
+$color-coral:       #d0566b; // Hibisco — relleno
+$color-coral-ink:   #b24659; // Hibisco legible como texto (AA sobre papel)
+$color-indigo:      #3b3a8f; // Índigo de los vestidos — acento puntual
+$color-cream:       #f4ead5; // Papel cálido
+$color-paper:       #fbf6ea; // Papel — fondo base
+$color-ink:         #14312a; // Tinta — verde casi negro
+
+// Foco: 3.65:1 sobre papel y 3.39:1 sobre selva profunda. Único tono visible
+// en ambos fondos, así ninguna banda necesita sobrescribirlo.
+$color-focus:       #c2691b;
+
+// Alias históricos → paleta nueva (los consumen las secciones ya construidas).
+$color-mangrove:    $color-leaf;
+$color-deep-sea:    $color-forest;
+$color-sand:        $color-cream;
+$color-bone:        $color-paper;
+$color-gold:        $color-amber;
+$color-gold-soft:   $color-amber-soft;
+
+// ---- Neutrales derivados ---------------------------------------------------
+// Opacidades verificadas contra el fondo más exigente ($color-cream, no
+// $color-paper): 0.74 → 5.1:1 · 0.70 → 4.7:1. Bajarlas rompe AA.
+$color-ink-70:      rgba(20, 49, 42, 0.74); // texto secundario
+$color-ink-50:      rgba(20, 49, 42, 0.7);  // texto terciario / captions (AA)
+$color-line:        rgba(20, 49, 42, 0.1);  // bordes sutiles
+$color-line-light:  rgba(251, 246, 234, 0.16);
+$color-white:       #ffffff;
+
+// ---- Estados (badges de proyectos / convocatorias) -------------------------
+$color-active:      $color-river-ink;  // en curso
+$color-open:        $color-wood;       // convocatoria abierta
+$color-closed:      $color-coral-ink;  // cerrado / finalizado
+
+// ---- Tipografía ------------------------------------------------------------
+// Outfit (variable, 100–900) para titulares: geométrica y rotunda. El fallback
+// es sans-serif a propósito: con un serif, los títulos vuelven a "periódico".
+$font-display: 'Outfit', 'Segoe UI', system-ui, -apple-system, sans-serif;
+$font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  Helvetica, Arial, sans-serif;
+
+// ---- Radios ----------------------------------------------------------------
+$radius-sm: 0.5rem;
+$radius-md: 0.875rem;
+$radius-lg: 1.25rem;
+$radius-xl: 2rem;
+$radius-pill: 999px;
+
+// ---- Sombras (suaves, tintadas de verde) -----------------------------------
+$shadow-xs: 0 1px 2px rgba(20, 49, 42, 0.06);
+$shadow-sm: 0 4px 14px rgba(20, 49, 42, 0.08);
+$shadow-md: 0 14px 34px rgba(20, 49, 42, 0.12);
+$shadow-lg: 0 28px 60px rgba(20, 49, 42, 0.18);
+$shadow-gold: 0 12px 30px rgba(226, 149, 43, 0.3);
+
+// ---- Espaciado y layout ----------------------------------------------------
+$container-max: 1200px;
+$container-pad: clamp(1.25rem, 5vw, 4rem);
+$section-gap: clamp(4.5rem, 10vw, 9rem);
+
+// ---- Transiciones ----------------------------------------------------------
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+// ---- Z-index ---------------------------------------------------------------
+$z-base: 1;
+$z-elevated: 10;
+$z-navbar: 100;
+$z-overlay: 900;
+$z-modal: 1000;
+
+// ---- Breakpoints -----------------------------------------------------------
+$breakpoints: (
+  'sm': 480px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+);
+
+// ============================================================================
+//  emit-root — publica los tokens como CSS custom properties globales.
+// ============================================================================
+@mixin emit-root {
+  // Colores — identidad
+  --c-forest: #{$color-forest};
+  --c-leaf: #{$color-leaf};
+  --c-leaf-ink: #{$color-leaf-ink};
+  --c-river: #{$color-river};
+  --c-river-ink: #{$color-river-ink};
+  --c-turquoise: #{$color-turquoise};
+  --c-turquoise-lt: #{$color-turquoise-lt};
+  --c-amber: #{$color-amber};
+  --c-amber-soft: #{$color-amber-soft};
+  --c-coral: #{$color-coral};
+  --c-coral-ink: #{$color-coral-ink};
+  --c-indigo: #{$color-indigo};
+  --c-paper: #{$color-paper};
+
+  // Alias históricos (consumidos por las secciones ya construidas)
+  --c-jungle: #{$color-jungle};
+  --c-mangrove: #{$color-mangrove};
+  --c-deep-sea: #{$color-deep-sea};
+  --c-sand: #{$color-sand};
+  --c-bone: #{$color-bone};
+  --c-cream: #{$color-cream};
+  --c-wood: #{$color-wood};
+  --c-gold: #{$color-gold};
+  --c-gold-soft: #{$color-gold-soft};
+  --c-ink: #{$color-ink};
+  --c-ink-70: #{$color-ink-70};
+  --c-ink-50: #{$color-ink-50};
+  --c-line: #{$color-line};
+  --c-line-light: #{$color-line-light};
+  --c-white: #{$color-white};
+
+  --c-active: #{$color-active};
+  --c-open: #{$color-open};
+  --c-closed: #{$color-closed};
+
+  --c-focus: #{$color-focus};
+
+  // Toile: color y opacidad del patrón de fondo (lo invierte .band--dark).
+  --toile-ink: #{$color-jungle};
+  --toile-opacity: 0.06;
+
+  // Superficies semánticas
+  --surface-page: #{$color-paper};
+  --surface-raised: #{$color-white};
+  --surface-warm: #{$color-cream};
+  --surface-deep: #{$color-forest};
+  --text-strong: #{$color-ink};
+  --text-muted: #{$color-ink-70};
+  --text-faint: #{$color-ink-50};
+  --text-on-deep: #{$color-paper};
+  // Acento de títulos de tarjeta e iconos. `.band--dark` lo vuelve ámbar.
+  --text-accent: #{$color-jungle};
+
+  // Degradados de identidad (selva profunda → río)
+  --grad-deep: linear-gradient(160deg, #{$color-forest} 0%, #{$color-jungle} 62%, #{$color-river} 100%);
+  --grad-tide: linear-gradient(180deg, #{$color-jungle} 0%, #{$color-forest} 100%);
+  --grad-gold: linear-gradient(90deg, #{$color-amber} 0%, #{$color-amber-soft} 100%);
+  --grad-dawn: linear-gradient(180deg, #{$color-paper} 0%, #{$color-cream} 100%);
+
+  // Tipografía
+  --font-display: #{$font-display};
+  --font-body: #{$font-body};
+
+  // Radios
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+  --radius-xl: #{$radius-xl};
+  --radius-pill: #{$radius-pill};
+
+  // Sombras
+  --shadow-xs: #{$shadow-xs};
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-gold: #{$shadow-gold};
+
+  // Layout
+  --container-max: #{$container-max};
+  --container-pad: #{$container-pad};
+  --section-gap: #{$section-gap};
+
+  // Movimiento
+  --ease-out: #{$ease-out};
+  --ease-inout: #{$ease-inout};
+
+  // Z-index
+  --z-navbar: #{$z-navbar};
+  --z-overlay: #{$z-overlay};
+  --z-modal: #{$z-modal};
+}

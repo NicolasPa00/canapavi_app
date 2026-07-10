@@ -1,0 +1,74 @@
+@use 'mixins' as m;
+@use 'tokens' as t;
+
+// El modal puede abrirse desde dentro de una `.band--dark`, que redefine los
+// tokens semánticos. Re-emitir los de :root aquí lo devuelve al esquema claro,
+// para que se vea igual venga de donde venga.
+//
+// `color` hereda el valor YA COMPUTADO: la banda oscura lo resolvió a crema y
+// eso baja hasta aquí aunque `--text-strong` valga otra cosa dentro del modal.
+// Sin esta línea, cualquier texto que no declare `color` sale crema sobre crema.
+.modal {
+  @include t.emit-root;
+  color: var(--text-strong);
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+}
+
+.modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--c-deep-sea) 55%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: cnp-fade-in 0.25s var(--ease-out);
+}
+
+.modal__dialog {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100dvh - 2.5rem);
+  overflow-y: auto;
+  background: var(--surface-raised);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  animation: cnp-scale-in 0.3s var(--ease-out);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.modal__dialog--lg {
+  max-width: 920px;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--text-muted);
+  background: var(--surface-warm);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out);
+  @include m.focus-ring;
+
+  &:hover {
+    background: var(--c-sand);
+    color: var(--c-ink);
+  }
+}

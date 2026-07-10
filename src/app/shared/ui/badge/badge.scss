@@ -1,0 +1,35 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.badge__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+}
+
+.badge--active {
+  color: var(--c-active);
+  background: color-mix(in srgb, var(--c-active) 14%, transparent);
+}
+.badge--open {
+  color: var(--c-open);
+  background: color-mix(in srgb, var(--c-open) 16%, transparent);
+}
+.badge--closed {
+  color: var(--c-closed);
+  background: color-mix(in srgb, var(--c-closed) 14%, transparent);
+}
+.badge--neutral {
+  color: var(--c-wood);
+  background: color-mix(in srgb, var(--c-wood) 12%, transparent);
+}

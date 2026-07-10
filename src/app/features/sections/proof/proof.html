@@ -1,0 +1,50 @@
+<section class="proof section" id="impacto" aria-labelledby="proof-title">
+  <span class="proof__toile" aria-hidden="true"></span>
+
+  <div class="container proof__inner">
+    <app-section-heading
+      headingId="proof-title"
+      eyebrow="Impacto"
+      heading="Diez años de trabajo, en cifras"
+      align="center"
+    />
+
+    <div class="proof__body">
+      <ul class="proof__stats" role="list">
+        @for (stat of stats; track stat.label; let i = $index) {
+          <li class="stat" appReveal="scale" [attr.data-reveal-delay]="i + 1">
+            <span
+              class="stat__num"
+              [appCountUp]="stat.value"
+              [prefix]="stat.prefix ?? ''"
+            >{{ display(stat) }}</span>
+            <span class="stat__label">{{ stat.label }}</span>
+          </li>
+        }
+      </ul>
+
+      <figure class="proof__figure" appReveal="scale" data-reveal-delay="2">
+        <img
+          src="/lazos.jpeg"
+          width="2752"
+          height="1536"
+          alt="Vista ilustrada de un territorio de ríos y casas palafíticas, donde cintas de colores y notas musicales enlazan las comunidades."
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Nueve municipios enlazados por el río y el canto.</figcaption>
+      </figure>
+    </div>
+
+    <figure class="proof__quote" appReveal="fade" data-reveal-delay="3">
+      <span class="proof__mark" aria-hidden="true">&ldquo;</span>
+      <blockquote>
+        <p>{{ quote.quote }}</p>
+      </blockquote>
+      <figcaption>
+        <span class="proof__author">{{ quote.author }}</span>
+        <span class="proof__role">{{ quote.role }}</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>

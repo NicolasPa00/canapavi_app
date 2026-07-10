@@ -1,0 +1,41 @@
+<section class="projects section" id="proyectos" aria-labelledby="projects-title">
+  <div class="container">
+    <app-section-heading
+      headingId="projects-title"
+      eyebrow="Nuestro trabajo"
+      heading="Tres procesos vivos"
+      align="center"
+    />
+
+    <ul class="projects__grid" role="list">
+      @for (project of projects; track project.id; let i = $index) {
+        <li class="project-card" appReveal [attr.data-reveal-delay]="i + 1">
+          <div class="project-card__media">
+            <img
+              [src]="project.image.src"
+              [width]="project.image.width"
+              [height]="project.image.height"
+              [alt]="project.image.alt"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div class="project-card__body">
+            <app-badge [status]="project.status">{{ project.statusLabel }}</app-badge>
+            <h3 class="project-card__title">{{ project.title }}</h3>
+            <p class="project-card__summary">{{ project.summary }}</p>
+
+            <ul class="project-card__tags" role="list">
+              @for (tag of project.tags; track tag) {
+                <li>{{ tag }}</li>
+              }
+            </ul>
+
+            <p class="project-card__meta">{{ project.location }} · {{ project.year }}</p>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

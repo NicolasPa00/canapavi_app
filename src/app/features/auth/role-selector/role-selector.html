@@ -1,0 +1,21 @@
+<div class="roles" role="radiogroup" aria-label="Seleccionar rol">
+  @for (role of roles; track role.id; let i = $index) {
+    <button
+      #opt
+      type="button"
+      class="role"
+      role="radio"
+      [class.is-selected]="selected() === role.id"
+      [attr.aria-checked]="selected() === role.id"
+      [attr.tabindex]="selected() === role.id || (!selected() && i === 0) ? 0 : -1"
+      (click)="select(role.id)"
+      (keydown)="onKeydown($event, i)"
+    >
+      <span class="role__check" aria-hidden="true"></span>
+      <span class="role__text">
+        <span class="role__label">{{ role.label }}</span>
+        <span class="role__desc">{{ role.description }}</span>
+      </span>
+    </button>
+  }
+</div>

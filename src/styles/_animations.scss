@@ -1,0 +1,38 @@
+// ============================================================================
+//  CANAPAVI · Keyframes globales
+//  Las clases utilitarias de reveal viven en styles.scss para que la
+//  directiva RevealOnScroll (core/directives) las active al entrar en viewport.
+// ============================================================================
+
+@keyframes cnp-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cnp-fade-up {
+  from { opacity: 0; transform: translate3d(0, 28px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes cnp-scale-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+// Flotación muy sutil para cards/elementos decorativos del hero.
+@keyframes cnp-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+// Brillo dorado que recorre superficies (shimmer decorativo).
+@keyframes cnp-shimmer {
+  from { background-position: -160% 0; }
+  to   { background-position: 260% 0; }
+}
+
+// Ondas del Pacífico (fondos decorativos).
+@keyframes cnp-wave {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}

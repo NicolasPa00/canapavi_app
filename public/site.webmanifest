@@ -1,0 +1,17 @@
+{
+  "name": "Fundación CANAPAVI",
+  "short_name": "CANAPAVI",
+  "description": "Cultura, memoria e identidad del Pacífico Sur colombiano.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf8f2",
+  "theme_color": "#14323b",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

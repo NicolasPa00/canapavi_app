@@ -1,0 +1,236 @@
+@use 'mixins' as m;
+
+// El hero es claro (papel), así que la navbar nace con texto oscuro; sólo
+// cambia el fondo al hacer scroll, no el color del texto.
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-navbar);
+  color: var(--text-strong);
+  transition: background 0.4s var(--ease-out), box-shadow 0.4s;
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  height: 4.75rem;
+}
+
+// Estado con scroll → glass claro.
+.nav--scrolled {
+  @include m.glass(color-mix(in srgb, var(--c-bone) 82%, transparent), 16px);
+  border-bottom: 1px solid var(--c-line);
+  box-shadow: var(--shadow-sm);
+}
+
+// ---- Marca ----
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  @include m.focus-ring;
+}
+
+.brand__mark svg {
+  display: block;
+  fill: var(--c-gold);
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+.brand__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+}
+.brand__sub {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+// ---- Enlaces (escritorio) ----
+.nav__links {
+  display: none;
+
+  @include m.respond-to('lg') {
+    display: block;
+  }
+
+  ul {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  a {
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: var(--radius-pill);
+    transition: color 0.3s var(--ease-out);
+    @include m.focus-ring;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: auto 0.85rem 0.3rem;
+      height: 2px;
+      background: var(--c-gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s var(--ease-out);
+    }
+
+    &:hover::after,
+    &.is-active::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+// ---- Acciones ----
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav__cta {
+  display: none;
+
+  @include m.respond-to('md') {
+    display: inline-flex;
+  }
+}
+
+// ---- Chip de usuario ----
+.nav__user {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.nav__avatar {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: var(--grad-gold);
+  color: var(--c-ink);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.nav__user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.nav__user-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.nav__user-role {
+  font-size: 0.72rem;
+  opacity: 0.72;
+}
+.nav__user--mobile {
+  padding: 0.85rem 0.5rem;
+}
+
+// ---- Botón hamburguesa ----
+.nav__burger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0.6rem;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  @include m.focus-ring;
+
+  @include m.respond-to('lg') {
+    display: none;
+  }
+
+  span {
+    display: block;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform 0.3s var(--ease-out), opacity 0.3s;
+  }
+
+  &.is-open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  &.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+  &.is-open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+// ---- Panel móvil ----
+// `display: flex` del autor gana al `[hidden] { display: none }` del navegador,
+// así que hay que ocultarlo explícitamente o el panel queda siempre abierto.
+.nav__mobile[hidden] {
+  display: none;
+}
+
+.nav__mobile {
+  @include m.container;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-block: 1.25rem 2rem;
+  @include m.glass(color-mix(in srgb, var(--c-bone) 94%, transparent), 18px);
+  border-bottom: 1px solid var(--c-line);
+  color: var(--text-strong);
+  box-shadow: var(--shadow-md);
+  animation: cnp-fade-in 0.25s var(--ease-out);
+
+  @include m.respond-to('lg') {
+    display: none;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    display: block;
+    padding: 0.85rem 0.5rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    border-bottom: 1px solid var(--c-line);
+    @include m.focus-ring;
+
+    &.is-active {
+      color: var(--c-wood);
+    }
+  }
+
+  app-button {
+    margin-top: 1rem;
+    width: 100%;
+  }
+}

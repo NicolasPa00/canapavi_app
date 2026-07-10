@@ -1,0 +1,94 @@
+@use 'mixins' as m;
+
+.pillars {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--surface-page);
+}
+
+.pillars__toile {
+  @include m.toile;
+  z-index: -1;
+}
+
+.pillars__grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+
+  @include m.respond-to('md') {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+.pillar {
+  @include m.card-surface;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  text-align: center;
+  transition:
+    transform 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.pillar__icon {
+  display: grid;
+  place-items: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: var(--surface-warm);
+
+  svg {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  // Trazo de tinta y acentos, como en las ilustraciones originales.
+  .ink,
+  .accent,
+  .river {
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  // `--text-accent` y no `--c-jungle`: sobre la banda oscura el verde selva
+  // desaparecería contra la tarjeta.
+  .ink {
+    stroke: var(--text-accent);
+  }
+  .accent {
+    stroke: var(--c-wood);
+  }
+  .river {
+    stroke: var(--c-turquoise);
+    stroke-width: 7.5;
+    opacity: 0.55;
+  }
+
+  .accent-fill {
+    fill: var(--c-amber);
+  }
+  .coral-fill {
+    fill: var(--c-coral);
+  }
+}
+
+.pillar__title {
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+}
+
+.pillar__line {
+  margin-top: 0.6rem;
+  color: var(--text-muted);
+  text-wrap: balance;
+}

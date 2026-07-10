@@ -1,0 +1,42 @@
+<section class="hero" id="inicio" aria-labelledby="hero-title">
+  <!-- Capas decorativas: amanecer sobre papel + toile del Pacífico -->
+  <div class="hero__bg" aria-hidden="true">
+    <span class="hero__sun" [style.transform]="'translateY(' + parallax() + 'px)'"></span>
+    <span class="hero__leaves"></span>
+    <span class="hero__toile"></span>
+  </div>
+
+  <div class="hero__inner container">
+    <!-- La mujer mira y saluda hacia la derecha: va a la izquierda del titular. -->
+    <div class="hero__figure" appReveal="scale">
+      <img
+        src="/login.png"
+        width="2400"
+        height="1340"
+        alt="Ilustración de una mujer del Pacífico sonriente, con una flor en el cabello y vestido tradicional, extendiendo la mano en señal de bienvenida."
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+
+    <div class="hero__content">
+      <p class="hero__eyebrow" appReveal="fade">Fundación cultural del Pacífico Sur</p>
+
+      <h1 id="hero-title" class="hero__title" appReveal>
+        Cuando las cantadoras cantan, el <span>Pacífico</span> recuerda quién es.
+      </h1>
+
+      <p class="hero__lead" appReveal data-reveal-delay="2">
+        Salvaguardamos la memoria viva de las comunidades afro y nariñenses.
+      </p>
+
+      <div class="hero__actions" appReveal data-reveal-delay="3">
+        <app-button href="#contacto" variant="gold" size="lg">Súmate</app-button>
+      </div>
+    </div>
+  </div>
+
+  <a class="hero__scroll" href="#proposito" aria-label="Ir a la siguiente sección">
+    <span aria-hidden="true"></span>
+  </a>
+</section>

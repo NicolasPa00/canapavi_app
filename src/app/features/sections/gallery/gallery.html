@@ -1,0 +1,70 @@
+<section class="gallery section" id="galeria" aria-labelledby="gallery-title">
+  <div class="container">
+    <app-section-heading
+      headingId="gallery-title"
+      eyebrow="Miradas"
+      heading="Galería del territorio"
+      align="center"
+    />
+
+    <ul class="gallery__grid" role="list">
+      @for (item of items; track item.id; let i = $index) {
+        <li class="gallery__cell" appReveal="scale" [attr.data-reveal-delay]="(i % 4) + 1">
+          <button
+            type="button"
+            class="gallery__item"
+            (click)="openAt(i)"
+            [attr.aria-label]="'Ampliar imagen: ' + item.caption"
+          >
+            <img
+              [src]="item.src"
+              [width]="item.width"
+              [height]="item.height"
+              [alt]="item.alt"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="gallery__caption">
+              <span class="gallery__category">{{ item.category }}</span>
+              {{ item.caption }}
+            </span>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<app-modal [open]="open()" size="lg" [labelledby]="'lightbox-caption'" (close)="close()">
+  <div class="lightbox">
+    <div class="lightbox__stage">
+      <img
+        [src]="current().src"
+        [width]="current().width"
+        [height]="current().height"
+        [alt]="current().alt"
+        decoding="async"
+      />
+    </div>
+
+    <div class="lightbox__bar">
+      <button type="button" class="lightbox__nav" (click)="prev()" aria-label="Imagen anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15 5 8 12l7 7" />
+        </svg>
+      </button>
+
+      <p id="lightbox-caption" class="lightbox__caption">
+        {{ current().caption }}
+        <span class="lightbox__count">{{ index() + 1 }} / {{ items.length }}</span>
+      </p>
+
+      <button type="button" class="lightbox__nav" (click)="next()" aria-label="Imagen siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="m9 5 7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</app-modal>

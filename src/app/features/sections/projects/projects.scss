@@ -1,0 +1,97 @@
+@use 'mixins' as m;
+
+.projects {
+  background: var(--surface-page);
+}
+
+.projects__grid {
+  display: grid;
+  gap: 1.75rem;
+  grid-template-columns: 1fr;
+
+  @include m.respond-to('sm') {
+    grid-template-columns: 1fr 1fr;
+  }
+  @include m.respond-to('lg') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-raised);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+.project-card__media {
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  padding: 1rem;
+  // Papel cálido detrás: los PNG traen fondo blanco y `multiply` lo funde.
+  background: var(--surface-warm);
+
+  img {
+    width: 100%;
+    height: 100%;
+    // `contain`, no `cover`: son ilustraciones con figuras completas y el
+    // recorte les cortaba la cabeza.
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .project-card:hover & img {
+    transform: scale(1.05);
+  }
+}
+
+.project-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.project-card__title {
+  font-size: 1.25rem;
+  color: var(--text-accent);
+  line-height: 1.25;
+}
+
+.project-card__summary {
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.project-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+
+  li {
+    padding: 0.25rem 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--c-mangrove);
+    background: color-mix(in srgb, var(--c-mangrove) 9%, transparent);
+    border-radius: var(--radius-pill);
+  }
+}
+
+.project-card__meta {
+  font-size: 0.82rem;
+  color: var(--text-faint);
+}

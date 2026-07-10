@@ -1,0 +1,65 @@
+<section class="pillars section" id="proposito" aria-labelledby="pillars-title">
+  <span class="pillars__toile" aria-hidden="true"></span>
+
+  <div class="container">
+    <app-section-heading
+      headingId="pillars-title"
+      eyebrow="Qué hacemos"
+      heading="Tres formas de sostener la cultura"
+      align="center"
+    />
+
+    <ul class="pillars__grid" role="list">
+      @for (pillar of pillars; track pillar.icon) {
+        <li class="pillar" appReveal [attr.data-reveal-delay]="$index + 1">
+          <span class="pillar__icon" aria-hidden="true">
+            @switch (pillar.icon) {
+              @case ('libro') {
+                <!-- Libro abierto + nota: la tradición oral que se recoge -->
+                <svg viewBox="0 0 64 64" focusable="false">
+                  <path class="ink" d="M6 22c9-6 16-5 24 1v33c-8-6-15-7-24-1Z" />
+                  <path class="ink" d="M58 22c-9-6-16-5-24 1v33c8-6 15-7 24-1Z" />
+                  <circle class="accent-fill" cx="43" cy="12" r="3.4" />
+                  <path class="accent" d="M46.4 12V3l7.6 2.4" />
+                </svg>
+              }
+              @case ('manos') {
+                <!-- Manos abiertas que sostienen un hibisco: la comunidad -->
+                <svg viewBox="0 0 64 64" focusable="false">
+                  <path class="ink" d="M13 35c0 12 8.5 21 19 21s19-9 19-21" />
+                  <path class="ink" d="M13 35l-3.5-8" />
+                  <path class="ink" d="M51 35l3.5-8" />
+                  <path class="ink" d="M21 36v-7a3 3 0 0 1 6 0v7" />
+                  <path class="ink" d="M37 36v-7a3 3 0 0 1 6 0v7" />
+                  @for (angle of petals; track angle) {
+                    <ellipse
+                      class="coral-fill"
+                      cx="32"
+                      cy="11"
+                      rx="4.6"
+                      ry="6.4"
+                      [attr.transform]="'rotate(' + angle + ' 32 17)'"
+                    />
+                  }
+                  <circle class="accent-fill" cx="32" cy="17" r="2.8" />
+                </svg>
+              }
+              @case ('rio') {
+                <!-- Río estrellado: el territorio -->
+                <svg viewBox="0 0 64 64" focusable="false">
+                  <path class="river" d="M11 57C29 49 15 39 32 31 49 23 35 13 53 5" />
+                  <path class="ink" d="M11 57C29 49 15 39 32 31 49 23 35 13 53 5" />
+                  <path class="accent-fill" d="M23 45l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6z" />
+                  <path class="accent-fill" d="M41 15l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6z" />
+                </svg>
+              }
+            }
+          </span>
+
+          <h3 class="pillar__title">{{ pillar.title }}</h3>
+          <p class="pillar__line">{{ pillar.line }}</p>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

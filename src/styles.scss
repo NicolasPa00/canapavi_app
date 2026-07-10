@@ -1,1 +1,251 @@
-/* You can add global styles to this file, and also import other style files */
+// ============================================================================
+//  CANAPAVI · Estilos globales
+// ============================================================================
+@use 'styles/tokens' as t;
+@use 'styles/mixins' as m;
+@use 'styles/animations';
+
+// ---- Tipografía autohospedada ----------------------------------------------
+// Ficheros reales en public/fonts/ (subset latin, cubre ñ y tildes). Sin
+// peticiones a Google en runtime.
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/outfit-variable.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-variable.woff2') format('woff2');
+}
+
+// ---- Tokens como CSS custom properties -------------------------------------
+:root {
+  @include t.emit-root;
+  color-scheme: light;
+  scroll-behavior: smooth;
+  // Compensa la navbar fija al saltar a #anclas.
+  scroll-padding-top: 6rem;
+}
+
+// ---- Reset -----------------------------------------------------------------
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-strong);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+
+// ---- Jerarquía tipográfica -------------------------------------------------
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--text-strong);
+  text-wrap: balance;
+}
+
+// El h1 se apropia del inicio: Outfit 800, muy apretado.
+h1 {
+  font-size: clamp(2.7rem, 6.6vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+h2 {
+  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+h3 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
+
+p {
+  text-wrap: pretty;
+}
+
+// ---- Utilidades de layout --------------------------------------------------
+.container {
+  @include m.container;
+}
+
+.section {
+  padding-block: var(--section-gap);
+}
+
+// ---- Bandas alternas -------------------------------------------------------
+// Las secciones alternan cálida / verde profunda para que el ojo las separe.
+// `.band--dark` no reestiliza nada: solo redefine los tokens semánticos, y las
+// secciones —que consumen var(--surface-*) y var(--text-*)— se invierten solas.
+.band {
+  display: block;
+}
+
+.band--dark {
+  --surface-page: #{t.$color-forest};
+  --surface-raised: #1b4639; // tarjeta: un verde por encima del fondo
+  --surface-warm: #143a30; // círculos de icono: más oscuro que la tarjeta,
+  --surface-deep: #{t.$color-forest}; // si no, los iconos pierden contraste
+
+  // El ámbar del foco sí destaca sobre la tarjeta verde; el naranja quemado no.
+  --c-focus: #{t.$color-amber-soft};
+
+  --text-strong: #{t.$color-paper};
+  --text-muted: rgba(251, 246, 234, 0.82);
+  --text-faint: rgba(251, 246, 234, 0.68);
+  --text-accent: #{t.$color-amber-soft};
+
+  --c-ink: #{t.$color-paper};
+  --c-ink-70: rgba(251, 246, 234, 0.82);
+  --c-ink-50: rgba(251, 246, 234, 0.68);
+  --c-line: rgba(251, 246, 234, 0.16);
+  --c-wood: #{t.$color-amber-soft}; // antetítulos
+  --c-mangrove: #86cfa2; // etiquetas y textos verdes claros
+
+  --toile-ink: #{t.$color-paper};
+  --toile-opacity: 0.07;
+
+  background: var(--surface-page);
+  color: var(--text-strong);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Salta directamente al contenido con el teclado (accesibilidad).
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: var(--z-modal);
+  padding: 0.75rem 1.25rem;
+  background: var(--c-jungle);
+  color: var(--c-bone);
+  border-radius: var(--radius-sm);
+  transition: top 0.2s var(--ease-out);
+
+  &:focus {
+    top: 1rem;
+  }
+}
+
+:focus-visible {
+  outline: 3px solid var(--c-focus);
+  outline-offset: 3px;
+}
+
+// ---- Reveal on scroll ------------------------------------------------------
+// La directiva RevealOnScroll aplica .is-visible cuando el elemento entra en
+// viewport. Sin JS (o sin soporte), el contenido queda visible por defecto.
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  will-change: opacity, transform;
+}
+
+[data-reveal='fade'] {
+  transform: none;
+}
+
+[data-reveal='scale'] {
+  transform: scale(0.94);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+// Retrasos escalonados para grupos de elementos.
+@for $i from 1 through 8 {
+  [data-reveal-delay='#{$i}'] {
+    transition-delay: #{$i * 0.08}s;
+  }
+}
+
+// ---- Respeto por prefers-reduced-motion ------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}

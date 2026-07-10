@@ -1,0 +1,47 @@
+<app-modal [open]="open()" [labelledby]="'login-title'" (close)="onClose()">
+  <div class="soon">
+    <!-- Cinta tejida: el mismo lazo que enlaza las secciones del sitio -->
+    <span class="soon__ribbon" aria-hidden="true"></span>
+
+    <!-- Una marimba a medio construir: faltan teclas por poner -->
+    <div class="soon__art" aria-hidden="true">
+      <svg viewBox="0 0 132 96" focusable="false">
+        <path class="soon__frame" d="M14 40 L104 26 L118 46 L28 62 Z" />
+        @for (bar of placedBars; track bar) {
+          <path class="soon__bar" [attr.d]="bar" />
+        }
+        @for (bar of missingBars; track bar) {
+          <path class="soon__bar soon__bar--missing" [attr.d]="bar" />
+        }
+        <path class="soon__frame" d="M28 62 v22 M114 46 v22" />
+        <path class="soon__tube" d="M40 66 v16 M56 64 v16 M72 61 v16 M88 58 v16" />
+        <circle class="soon__note" cx="112" cy="16" r="4" />
+        <path class="soon__stem" d="M116 16 V4 l9 3" />
+      </svg>
+    </div>
+
+    <header class="soon__head">
+      <p class="soon__badge">
+        <span aria-hidden="true">&#9881;</span> Próximamente
+      </p>
+      <h2 id="login-title" class="soon__title">Esta puerta aún se está tallando</h2>
+      <p class="soon__text">
+        El acceso todavía no existe: esto es un prototipo. Estamos construyéndolo
+        como se construye una marimba, tecla por tecla.
+      </p>
+    </header>
+
+    <div class="soon__roles">
+      <p class="soon__roles-title">Perfiles que podrán entrar</p>
+      <ul role="list">
+        @for (role of roles; track role.id) {
+          <li>{{ role.label }}</li>
+        }
+      </ul>
+    </div>
+
+    <app-button variant="gold" size="lg" [full]="true" (click)="onClose()">
+      Seguir explorando
+    </app-button>
+  </div>
+</app-modal>

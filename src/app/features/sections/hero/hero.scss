@@ -1,0 +1,173 @@
+@use 'mixins' as m;
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--grad-dawn);
+  padding-block: 7.5rem 5rem;
+
+  @include m.respond-to('lg') {
+    padding-block: 9.5rem 7rem;
+    min-height: 100svh;
+    display: grid;
+    align-items: center;
+  }
+}
+
+// ---- Fondo -----------------------------------------------------------------
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+// Sol del Pacífico, como degradado: misma imagen que sol.png, 0 KB de red.
+.hero__sun {
+  position: absolute;
+  top: -26vw;
+  right: -20vw;
+  width: 72vw;
+  height: 72vw;
+  max-width: 820px;
+  max-height: 820px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(240, 176, 74, 0.36) 0%,
+    rgba(226, 149, 43, 0.16) 42%,
+    rgba(226, 149, 43, 0) 72%
+  );
+  will-change: transform;
+}
+
+// Manglar: verde que sube desde la esquina inferior izquierda.
+.hero__leaves {
+  position: absolute;
+  left: -18vw;
+  bottom: -24vw;
+  width: 62vw;
+  height: 62vw;
+  max-width: 700px;
+  max-height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(62, 142, 98, 0.22) 0%,
+    rgba(27, 127, 140, 0.1) 46%,
+    rgba(27, 127, 140, 0) 72%
+  );
+}
+
+.hero__toile {
+  @include m.toile;
+}
+
+// ---- Composición -----------------------------------------------------------
+.hero__inner {
+  position: relative;
+  display: grid;
+  gap: 2.5rem;
+
+  @include m.respond-to('lg') {
+    // Figura a la izquierda, titular a la derecha: la mujer saluda hacia él.
+    grid-template-columns: 0.95fr 1.05fr;
+    align-items: center;
+    gap: 3rem;
+  }
+}
+
+.hero__content {
+  max-width: 34rem;
+  order: 2;
+}
+
+.hero__eyebrow {
+  @include m.eyebrow;
+  margin-bottom: 1.25rem;
+}
+
+.hero__title span {
+  color: var(--c-river-ink);
+}
+
+.hero__lead {
+  margin-top: 1.5rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  color: var(--text-muted);
+  max-width: 30rem;
+}
+
+.hero__actions {
+  margin-top: 2.25rem;
+}
+
+// ---- La mujer que da la bienvenida -----------------------------------------
+// `login.png` es RGBA (80% transparente) sobre un lienzo panorámico de
+// 2400×1340 cuyo 58% derecho está vacío. La figura ocupa x 7–42% y llega de
+// borde a borde en vertical. La caja replica esa proporción (840×1340 ≈ 63/100)
+// y se centra en el 24,6%: se ve la ilustración entera, sin cortarle nada y sin
+// arrastrar el lienzo vacío. Con alfa real no hace falta `mix-blend-mode`.
+.hero__figure {
+  order: 1;
+  justify-self: center;
+  width: min(100%, 22rem);
+  aspect-ratio: 63 / 100;
+  overflow: hidden;
+
+  @include m.respond-to('lg') {
+    width: min(100%, 27rem);
+    justify-self: start;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 24.6% 50%;
+  }
+}
+
+// ---- Indicador de scroll ---------------------------------------------------
+.hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  translate: -50% 0;
+  display: none;
+  width: 26px;
+  height: 42px;
+  border: 2px solid var(--c-ink-50);
+  border-radius: var(--radius-pill);
+  @include m.focus-ring;
+
+  @include m.respond-to('lg') {
+    display: block;
+  }
+
+  span {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    translate: -50% 0;
+    width: 4px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    background: var(--c-wood);
+    animation: hero-scroll 1.8s var(--ease-inout) infinite;
+  }
+}
+
+@keyframes hero-scroll {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}

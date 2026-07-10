@@ -1,11 +1,71 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>CanapaviApp</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- SEO principal -->
+  <title>Fundación CANAPAVI · Cultura, memoria e identidad del Pacífico</title>
+  <meta name="description"
+    content="CANAPAVI — Fundación Cultura Nariñense para el Rescate de los Valores e Identidad. Salvaguardia cultural, cantadoras del Pacífico, investigación participativa y fortalecimiento comunitario en Nariño y el Pacífico Sur colombiano.">
+  <meta name="author" content="Fundación CANAPAVI">
+  <meta name="keywords"
+    content="CANAPAVI, cultura, patrimonio, Pacífico colombiano, cantadoras, marimba, Nariño, memoria, identidad, etnoeducación, fundación">
+  <link rel="canonical" href="https://canapavi.org/">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#12352c">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Fuentes autohospedadas: sin ellas los títulos caen a un serif de sistema. -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/outfit-variable.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-variable.woff2" crossorigin>
+
+  <!-- La figura del hero es el LCP: se descarga antes de que arranque el JS. -->
+  <link rel="preload" as="image" href="/login.png" fetchpriority="high">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Fundación CANAPAVI">
+  <meta property="og:title" content="Fundación CANAPAVI · Cultura, memoria e identidad del Pacífico">
+  <meta property="og:description"
+    content="Cuando las cantadoras cantan, el Pacífico recuerda quién es. Salvaguardamos la memoria viva de las comunidades afro y nariñenses.">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:url" content="https://canapavi.org/">
+  <meta property="og:image" content="https://canapavi.org/login.png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1340">
+  <meta property="og:image:alt" content="Ilustración de una mujer del Pacífico con vestido tradicional, rodeada de marimbas, tambores y hojas.">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Fundación CANAPAVI">
+  <meta name="twitter:description"
+    content="Cultura, memoria e identidad del Pacífico Sur colombiano.">
+  <meta name="twitter:image" content="https://canapavi.org/login.png">
+
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Datos estructurados (SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NGO",
+    "name": "Fundación CANAPAVI",
+    "alternateName": "Fundación Cultura Nariñense para el Rescate de los Valores e Identidad",
+    "url": "https://canapavi.org/",
+    "description": "Salvaguardia cultural, cantadoras del Pacífico, investigación participativa y fortalecimiento comunitario en el Pacífico Sur colombiano.",
+    "foundingDate": "2016",
+    "email": "contacto@canapavi.org",
+    "areaServed": "Pacífico Sur, Colombia",
+    "knowsAbout": ["Cultura", "Patrimonio", "Memoria colectiva", "Cantadoras del Pacífico", "Etnoeducación"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "Nariño",
+      "addressCountry": "CO"
+    }
+  }
+  </script>
 </head>
 <body>
   <app-root></app-root>

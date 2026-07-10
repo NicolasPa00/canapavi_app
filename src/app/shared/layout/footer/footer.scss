@@ -1,0 +1,177 @@
+@use 'mixins' as m;
+
+.footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--grad-tide);
+  color: color-mix(in srgb, var(--c-bone) 82%, transparent);
+
+  // El pie es oscuro y vive fuera de las bandas: invierte el toile por su cuenta.
+  --toile-ink: var(--c-paper);
+  --toile-opacity: 0.06;
+}
+
+.footer__toile {
+  @include m.toile;
+  z-index: -1;
+}
+
+.footer__inner {
+  position: relative;
+  padding-block: clamp(2.5rem, 5vw, 4rem) 2rem;
+}
+
+// El canto abre el pie: es el propósito de la fundación en una línea.
+.footer__canto {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  padding-bottom: clamp(2rem, 4vw, 2.75rem);
+  border-bottom: 1px solid var(--c-line-light);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--c-bone);
+  text-wrap: balance;
+
+  span {
+    color: var(--c-amber);
+    font-size: 1.4em;
+    line-height: 0;
+  }
+}
+
+.footer__grid {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: 1fr;
+
+  @include m.respond-to('md') {
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+  @include m.respond-to('lg') {
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  }
+}
+
+// ---- Marca ----
+.footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  @include m.focus-ring;
+}
+.footer__mark svg {
+  fill: var(--c-gold);
+}
+.footer__name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--c-bone);
+  letter-spacing: 0.02em;
+}
+.footer__desc {
+  margin-top: 1rem;
+  max-width: 34ch;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.footer__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+
+  a {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    border: 1px solid var(--c-line-light);
+    border-radius: var(--radius-pill);
+    transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out);
+    @include m.focus-ring;
+
+    &:hover {
+      background: var(--c-gold);
+      color: var(--c-ink);
+      border-color: transparent;
+    }
+  }
+}
+
+// ---- Columnas ----
+.footer__heading {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-gold-soft);
+  margin-bottom: 1.1rem;
+}
+
+.footer__col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.95rem;
+}
+
+.footer__col a {
+  transition: color 0.25s var(--ease-out);
+  @include m.focus-ring;
+
+  &:hover {
+    color: var(--c-bone);
+  }
+}
+
+.footer__munis {
+  columns: 2;
+  gap: 1rem;
+
+  li {
+    break-inside: avoid;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  // Gota de río antes de cada pueblo.
+  li::before {
+    content: '';
+    flex: none;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--c-turquoise);
+  }
+}
+
+// ---- Barra inferior ----
+.footer__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--c-line-light);
+  font-size: 0.82rem;
+  color: color-mix(in srgb, var(--c-bone) 60%, transparent);
+
+  @include m.respond-to('md') {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+// Sin `font-style: italic`: las variables autohospedadas no traen cursiva.
+.footer__made {
+  color: var(--c-gold-soft);
+}

@@ -1,0 +1,35 @@
+@if (open()) {
+  <div class="modal">
+    <div class="modal__overlay" (click)="requestClose()" aria-hidden="true"></div>
+
+    <div
+      #dialog
+      class="modal__dialog"
+      [class.modal__dialog--lg]="size() === 'lg'"
+      role="dialog"
+      aria-modal="true"
+      tabindex="-1"
+      [attr.aria-labelledby]="labelledby() || null"
+      (keydown)="onKeydown($event)"
+    >
+      <button
+        type="button"
+        class="modal__close"
+        aria-label="Cerrar ventana"
+        (click)="requestClose()"
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path
+            d="M6 6l12 12M18 6L6 18"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            fill="none"
+          />
+        </svg>
+      </button>
+
+      <ng-content />
+    </div>
+  </div>
+}

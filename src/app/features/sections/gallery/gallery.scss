@@ -1,0 +1,161 @@
+@use 'mixins' as m;
+
+.gallery {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--surface-page);
+}
+
+// Masonry con columnas CSS: las ilustraciones tienen proporciones muy
+// distintas (16:9 y 1:1) y aquí conservan la suya sin recortes.
+.gallery__grid {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  columns: 1;
+  column-gap: 1.25rem;
+
+  @include m.respond-to('sm') {
+    columns: 2;
+  }
+  @include m.respond-to('lg') {
+    columns: 3;
+  }
+}
+
+.gallery__cell {
+  break-inside: avoid;
+  margin-bottom: 1.25rem;
+}
+
+.gallery__item {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface-raised);
+  cursor: pointer;
+  @include m.focus-ring;
+  transition:
+    transform 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  &:hover img {
+    transform: scale(1.04);
+  }
+}
+
+.gallery__caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 4rem 1rem 1rem;
+  text-align: left;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--c-paper);
+  background: linear-gradient(
+    180deg,
+    rgba(18, 53, 44, 0) 0%,
+    rgba(18, 53, 44, 0.72) 45%,
+    rgba(18, 53, 44, 0.94) 100%
+  );
+}
+
+.gallery__category {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-amber-soft);
+}
+
+// ---- Lightbox --------------------------------------------------------------
+// El escenario mide lo mismo para todas las imágenes (van de 16:9 a 1:1): así
+// el modal no salta de tamaño al pasar de una a otra. `contain` las apaisa
+// dentro de la caja y el sobrante queda como marco.
+.lightbox__stage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  max-height: 64svh;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-warm);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.lightbox__bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.lightbox__nav {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--c-line);
+  border-radius: 50%;
+  background: var(--surface-raised);
+  color: var(--text-strong);
+  cursor: pointer;
+  @include m.focus-ring;
+
+  // Chevrones en SVG: el subset latin de la tipografía no trae ← ni →.
+  svg {
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &:hover {
+    background: var(--surface-warm);
+    border-color: var(--c-jungle);
+    color: var(--c-jungle);
+  }
+}
+
+.lightbox__caption {
+  flex: 1;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.lightbox__count {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}

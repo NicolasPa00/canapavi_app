@@ -1,0 +1,40 @@
+@use 'mixins' as m;
+
+.heading {
+  max-width: 44rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.heading--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.heading__eyebrow {
+  @include m.eyebrow;
+  margin-bottom: 1rem;
+}
+
+.heading__title {
+  color: var(--text-strong);
+}
+
+.heading__intro {
+  margin-top: 1.25rem;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+// ---- Sobre fondo oscuro ----
+.heading--on-dark {
+  .heading__eyebrow {
+    color: var(--c-gold-soft);
+  }
+  .heading__title {
+    color: var(--c-bone);
+  }
+  .heading__intro {
+    color: color-mix(in srgb, var(--c-bone) 82%, transparent);
+  }
+}
